@@ -10,8 +10,6 @@ module.exports = class Loop {
                 console.log(loops[i].loopName)
                 loops[i].loopFunction()
                 return 
-            } else {
-                console.log('wewewewewew');
             }
         }
     }
