@@ -1,7 +1,8 @@
 # Introduction
 
-Chatbot framework designed based on the game loop. 
-Actually only supports Messenger.
+Chatbot framework designed taking user context as a priority. 
+* Created mixing game loops and web routes concepts.
+* Actually only supports Messenger.
 
 # Usage
 
