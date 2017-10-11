@@ -1,23 +1,13 @@
 # Introduction
 
-Chatbot framework designed based on game loop. 
-Actualy only supports Messenger.
+Chatbot framework designed based on the game loop. 
+Actually only supports Messenger.
 
+# Usage
 
+Every time user sends input, loopsRoutes.js will be called. And based on the user status, define the correct loop to call. 
 
-
-# Main idea
-
-File structure:
-/loops
-/loops/loopsIndex.js
-/loops/someFeature-loop.js
-/loops/otherFeature-loop.js
-
-Basics:
-Every time user send some input, loopsIndex.js will be called and define the correct loop to call(based on status you define in some loop file).
-
-/loops/loopsIndex.js
+/loops/loopsRoutes.js
 ```js
 const Loop = require('chatloop').Loop;
 
@@ -60,7 +50,6 @@ Loop.findCurrentLoop(
     ArrayOfLoops
 )
 }
-
 ```
 
 Exemple of conversational loop:
@@ -100,24 +89,35 @@ module.exports = function(event, status) {
         }
     }
 }
-
 ```
 Based on user status, /loops/likePizza-loop.js or 
 /loops/dontlikePizza-loop.js will be called. 
+
+FUNCTIONS:
+```js
+send.Text(event.senderId, 'some_text')
+send.RequestLocation(event.senderId, 'some_text')
+send.Button(event.senderId, 'some_text', buttons)
+send.QuickReply(event.senderId, 'some_text', quick_reply)
+//new features coming soon
+```
+Create a /.wnv file to put config data
+```.env
+PAGE_ACESS_TOKEN = <messenger page token>
+VERIFICATION = <large string>
+```
 
 # Examples, Tutorials
 coming soon
 
 #Contribute
 We have the "quests" below: 
-
-* Add support for other messaging platforms
-* Add testing features
+* Add more Messenger features.
+* Add support for other messaging platforms.
+* Add testing features.
 * Create database feature for easily persist user status
-(I'm finishing one in Mongodb)   
-* Create status using local json file, for testing without database
-
-But feel free to build anything with chatloop.
+(I'm finishing one in MongoDB).   
+* Create some feature for persisting user status data in a local JSON file, for testing and prototyping without a database.
 
 # License
 

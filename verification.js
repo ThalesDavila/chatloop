@@ -1,6 +1,3 @@
-//config constants
-
-
 module.exports = (req, res) => {
     const hubChallenge = req.query['hub.challenge'];
 

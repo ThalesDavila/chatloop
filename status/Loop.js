@@ -8,8 +8,8 @@ module.exports = class Loop {
         for(let i = 0; i<loops.length; i++) {
             if(loops[i].loopName === tryloopName) {
                 console.log(loops[i].loopName)
-                loops[i].loopFunction()
-                return 
+                
+                return loops[i].loopFunction() 
             }
         }
     }
