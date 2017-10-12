@@ -8,6 +8,19 @@ Chatbot framework designed taking user context as a priority.
 
 Every time user sends input, loopsRoutes.js will be called. And based on the user context, define the correct loop to call. 
 
+Send the loopRoutes to chatloop:
+```js
+const chatloop = require('chatloop');
+const loopsRoutes = require('./loops/loopsRoutes');
+
+chatloop.Connect(
+    loopsRoutes
+    //The default port is 3000
+    //Can put here any port number you want
+);
+```
+
+
 /loops/loopsRoutes.js
 ```js
 const Loop = require('chatloop').Loop;
@@ -52,6 +65,7 @@ Loop.findCurrentLoop(
 )
 }
 ```
+
 
 Exemple of conversational loop:
 
