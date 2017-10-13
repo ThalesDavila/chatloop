@@ -127,7 +127,7 @@ send.QuickReply(event.senderId, 'some_text', quick_reply)
 
 
 # Examples, Tutorials
-coming soon
+[Build your first Chatbot with Chatloop](https://medium.com/@thalesmdav/build-your-first-chatbot-with-chatloop-ddd21e47e21)
 
 # Contribute
 We have the "quests" below: 
