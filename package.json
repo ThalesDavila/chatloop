@@ -1,6 +1,6 @@
 {
   "name": "chatloop",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Chatbot framework designed taking user context as a priority.",
   "main": "index.js",
   "engines": {
