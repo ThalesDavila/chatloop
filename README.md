@@ -122,6 +122,36 @@ send.Text(event.senderId, 'some_text')
 send.RequestLocation(event.senderId, 'some_text')
 send.Button(event.senderId, 'some_text', buttons)
 send.QuickReply(event.senderId, 'some_text', quick_reply)
+send.GenericTemplate(event.senderId, elements,
+    /*
+    image_aspect_ratio can be:
+    'horizontal' or 'square'
+    default is 'horizontal'
+    */
+
+    /*
+    sharable 
+    default is true
+    */
+)
+send.ListTemplate(event.senderId, elements,
+    /*
+    top_element_style can be 'large' or 'compact'
+    default is 'large'
+    */
+)
+send.Typing(event.senderId)
+send.Random(
+    // Will send random between 'text_1' and 'text_2' 
+    [
+        function() {
+            send.Text(event.senderId, 'text_1');
+        },
+        function() {
+            send.Text(event.senderId, 'text_2');
+        }
+    ]
+)
 //new features coming soon
 ```
 

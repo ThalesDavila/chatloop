@@ -58,7 +58,7 @@ exports.QuickReply = async function(
 exports.GenericTemplate = async function(
     senderId,
     elements,
-    image_aspect_ratio = 'square',
+    image_aspect_ratio = 'horizontal',
     sharable = true
 ) {
     try {
@@ -84,7 +84,7 @@ exports.GenericTemplate = async function(
 exports.ListTemplate = async function(
     senderId,
     elements,
-    top_element_style = 'compact'
+    top_element_style = 'large'
 ) {
     try {
         await sendToMessenger({
@@ -147,7 +147,7 @@ exports.Image = async function(
     }
 }
 
-exports.SendTyping = async function(
+exports.Typing = async function(
     senderId
 ) {
     try {
