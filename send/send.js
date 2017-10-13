@@ -1,6 +1,9 @@
 const sendToMessenger = require('./sendToMessenger');
 
-exports.Text = async function (senderId, text) {
+exports.Text = async function (
+    senderId,
+    text
+) {
     try {
         await sendToMessenger({
             recipient: { id: senderId },
@@ -11,7 +14,11 @@ exports.Text = async function (senderId, text) {
     } 
 };
 
-exports.Button = async function(senderId, text, buttons) {
+exports.Button = async function(
+    senderId,
+    text,
+    buttons
+) {
     try {
         await sendToMessenger({
             recipient: { id: senderId },
@@ -30,7 +37,11 @@ exports.Button = async function(senderId, text, buttons) {
     } 
 }
 
-exports.QuickReply = async function(senderId, text, quickReplies) {
+exports.QuickReply = async function(
+    senderId,
+    text,
+    quickReplies
+) {
     try {
         await sendToMessenger({
             recipient: { id: senderId },
@@ -44,7 +55,60 @@ exports.QuickReply = async function(senderId, text, quickReplies) {
     } 
 }
 
-exports.RequestLocation = async function(senderId, text) {
+exports.GenericTemplate = async function(
+    senderId,
+    elements,
+    image_aspect_ratio = 'square',
+    sharable = true
+) {
+    try {
+        await sendToMessenger({
+            recipient: { id: senderId },
+            message: {
+                attachment: {
+                    type:'template',
+                    payload:{
+                    template_type:'generic',
+                    image_aspect_ratio: image_aspect_ratio,
+                    sharable: sharable,
+                    elements: elements  
+                    }
+                }
+            }
+        })
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+exports.ListTemplate = async function(
+    senderId,
+    elements,
+    top_element_style = 'compact'
+) {
+    try {
+        await sendToMessenger({
+            recipient: { id: senderId },
+            message: {
+                attachment: {
+                    type:'template',
+                    payload:{
+                        template_type:'list',
+                        top_element_style: top_element_style,
+                        elements: elements  
+                    }
+                }
+            }
+        })
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+exports.RequestLocation = async function(
+    senderId,
+    text
+) {
     try {
         await sendToMessenger({
             recipient: { id: senderId },
@@ -62,7 +126,10 @@ exports.RequestLocation = async function(senderId, text) {
     } 
 }
 
-exports.Image = async function(senderId, url) {
+exports.Image = async function(
+    senderId,
+    url
+) {
     try {
         await sendToMessenger({
             recipient: { id: senderId },
@@ -80,7 +147,9 @@ exports.Image = async function(senderId, url) {
     }
 }
 
-exports.SendTyping = async function(senderId) {
+exports.SendTyping = async function(
+    senderId
+) {
     try {
         await sendToMessenger({        
             recipient: { id: senderId },
@@ -91,7 +160,9 @@ exports.SendTyping = async function(senderId) {
     }
 }
 
-exports.Random = function(rand) {
+exports.Random = function(
+    rand
+) {
     randomItem = rand[Math.floor(Math.random()*rand.length)];
     return(randomItem());
 }
