@@ -1,12 +1,16 @@
 # Introduction
 
 Chatbot framework designed taking user context as a priority. 
-* Created mixing game loops and web routes concepts.
+* Created mixing game loop and web routing concepts.
+* Chatloop has a very easy to use a function to keep the user context under development. So, you don't need to worry about databases in the beginning.
 * Actually only supports Messenger.
 
-# Usage
 
-Every time user sends input, loopsRoutes.js will be called. And based on the user context, define the correct loop to call. 
+# Architecture Main Idea
+
+Every time user sends an input, the loopsRoutes file will be called. Then, based on the user context, will define the correct conversational loop to call.
+
+# Usage
 
 Send the loopRoutes to chatloop:
 ```js
@@ -24,43 +28,48 @@ chatloop.Connect(
 /loops/loopsRoutes.js
 ```js
 const Loop = require('chatloop').Loop;
+const context = require('chatloop').Development.context;
 
 const getStartedLoop = require('./getStarted-loop');
 const likePizza = require('./likePizza-loop');
 const dontlikePizza = require('./dontlikePizza-loop');
-//need to call context from some database
-module.exports = function (event) {
-    
+
+module.exports = async function (event) {    
+  /*
+  Will return the current context. 
+  If does not have loopToBeCalled defined, will call the getStartedLoop.
+  */
+    const read_context = await context();
+  if(read_context && read_context.loopToBeCalled) {
+    loopToBeCalled = read_context.loopToBeCalled
+  } else {
+    await context('getstartedLoop');
+    loopToBeCalled = 'getstartedLoop'
+  }
+
 //ArrayOfLoops have all conversational loops
   let ArrayOfLoops = [];
-
   ArrayOfLoops.push(new Loop(
       'getStartedLoop',
       function() {
         getStartedLoop(event, context)
       }
 ));
-
   ArrayOfLoops.push(new Loop(
       'likePizza',
       function() {
         likePizza(event, context)
       }
 ));
-
   ArrayOfLoops.push(new Loop(
-      'dontlikePizza',
+      'dontLikePizza',
       function() {
         dontlikePizza(event, context)
       }
 ));
 
 Loop.findCurrentLoop(
-    context,
-    /*
-    Returned by Database, should return
-    the string defined in ArrayOfLoops.
-    */  
+    loopToBeCalled,
     ArrayOfLoops
 )
 }
@@ -72,9 +81,9 @@ Exemple of conversational loop:
 /loops/getStarted-loop.js
 ```js
 const send = require('chatloop').Send;
+const context = require('chatloop').Development.context;
 
 module.exports = function(event, context) {
-    if(context.FIST_INTERACTION === 'true') {}
         send.Text(event.senderId, 'Hi');
 
         let buttons = [
@@ -89,31 +98,34 @@ module.exports = function(event, context) {
             payload:"LIKE_PIZZA_PAYLOAD"
         }
         ];
-        send.Button(event.senderId, 'Do You like pizza?', buttons);
-    else {
+        send.Button(event.senderId, 'Do You like pizza?', buttons)
+
         if(event.payload === "LIKE_PIZZA_PAYLOAD") {
-            //Change context: context.CALL_LOOP_FUNCTION = true
-            //You can do it in every database you want
-            //now next user input will call likePizza-loop.js
-            send.Text(event.senderId, 'Me too');
-            send.Text(event.senderId, 'What pizza flavour do you prefer?');
+            context('likePizzaLoop')
+            //change the loop to be called to likePizzaLoop
+            send.Text(event.senderId, 'Me too')
+            send.Text(event.senderId, 'What pizza flavour do you prefer?')
         }
          else if(event.payload === "DONT_LIKE_PIZZA_PAYLOAD") {
-            send.Text(event.senderId, 'I do not belive');
+            context('dontLikePizzaLoop') 
+            //change the loop to be called to dontLikePizzaLoop
+            send.Text(event.senderId, 'I do not belive')
             senD.Text(event.senderId, 'Do you like hamburguer?')
         }
-    }
 }
 ```
 Based on user context, /loops/likePizza-loop.js or 
 /loops/dontlikePizza-loop.js will be called. 
 
 
-Create a /.wnv file to put config data
+Create a /.env file to put config data
 ```.env
 PAGE_ACESS_TOKEN = <messenger page token>
 VERIFICATION = <large string>
 ```
+
+
+Under Production, you can easily substitute the context functions for database functions. 
 
 
 # Functions
@@ -128,7 +140,6 @@ send.GenericTemplate(event.senderId, elements,
     'horizontal' or 'square'
     default is 'horizontal'
     */
-
     /*
     sharable 
     default is true
@@ -152,21 +163,31 @@ send.Random(
         }
     ]
 )
-//new features coming soon
+//the send. funtions became from require('chatloop').Send;
+
+
+context() 
+//will return the current context
+context('likePizzaLoop') 
+//will store {"loopToBeCalled": "likePizzaLoop"} in a local file
+context(undefined, 'not choose a flavor')
+/* second element are used for some position inside the loop, will store {"position": "not choose a flavor"}
+//undefined in a parameter results in no change(only in parameter field) 
+*/
+contextDelete()
+//"reboot" the local file
+
+/*
+the context functions become from: require('chatloop').Development.context
+
+contextDelete from: require('chatloop').Development.contextDelete
+*/
 ```
 
 
 # Examples, Tutorials
 [Build your first Chatbot with Chatloop](https://medium.com/@thalesmdav/build-your-first-chatbot-with-chatloop-ddd21e47e21)
 
-# Contribute
-We have the "quests" below: 
-* Add more Messenger features.
-* Add support for other messaging platforms.
-* Add testing features.
-* Create database feature for easily persist user context
-(I'm finishing one in MongoDB).   
-* Create some feature for persisting user context data in a local JSON file, for testing and prototyping without a database.
 
 # License
 
