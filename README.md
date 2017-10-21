@@ -37,7 +37,8 @@ const dontlikePizza = require('./dontlikePizza-loop');
 module.exports = async function (event) {    
   /*
   Will return the current context. 
-  If does not have loopToBeCalled defined, will call the getStartedLoop.
+  If does not have loopToBeCalled defined,
+  will call the getStartedLoop.
   */
     const read_context = await context();
   if(read_context && read_context.loopToBeCalled) {
@@ -125,35 +126,37 @@ VERIFICATION = <large string>
 ```
 
 
-Under Production, you can easily substitute the context functions for database functions. 
+Under Production, you can easily substitute the context 
+functions for database functions. 
 
 
 # Functions
 ```js
 send.Text(event.senderId, 'some_text')
+send.Image(event.senderId, 'url')
 send.RequestLocation(event.senderId, 'some_text')
 send.Button(event.senderId, 'some_text', buttons)
 send.QuickReply(event.senderId, 'some_text', quick_reply)
 send.GenericTemplate(event.senderId, elements,
-    /*
-    image_aspect_ratio can be:
-    'horizontal' or 'square'
-    default is 'horizontal'
-    */
-    /*
-    sharable 
-    default is true
-    */
+/*
+image_aspect_ratio can be:
+'horizontal' or 'square'
+default is 'horizontal'
+*/
+/*
+sharable 
+default is true
+*/
 )
 send.ListTemplate(event.senderId, elements,
-    /*
-    top_element_style can be 'large' or 'compact'
-    default is 'large'
-    */
+/*
+top_element_style can be 'large' or 'compact'
+default is 'large'
+*/
 )
 send.Typing(event.senderId)
 send.Random(
-    // Will send random between 'text_1' and 'text_2' 
+//Will send random between 'text_1' and 'text_2' 
     [
         function() {
             send.Text(event.senderId, 'text_1');
@@ -168,19 +171,26 @@ send.Random(
 
 context() 
 //will return the current context
-context('likePizzaLoop') 
-//will store {"loopToBeCalled": "likePizzaLoop"} in a local file
-context(undefined, 'not choose a flavor')
-/* second element are used for some position inside the loop, will store {"position": "not choose a flavor"}
-//undefined in a parameter results in no change(only in parameter field) 
+context('someLoop') 
+/*
+will store {"loopToBeCalled": "likePizzaLoop"}
+in a local file
+*/
+context(undefined, 'some_position')
+/* second element are used for some position inside
+the loop, will store {"position": "not choose a flavor"}
+undefined in a parameter results in no change
+(only in parameter field) 
 */
 contextDelete()
 //"reboot" the local file
 
 /*
-the context functions become from: require('chatloop').Development.context
+the context functions become from: 
+require('chatloop').Development.context
 
-contextDelete from: require('chatloop').Development.contextDelete
+contextDelete from: 
+require('chatloop').Development.contextDelete
 */
 ```
 
