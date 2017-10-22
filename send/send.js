@@ -1,4 +1,5 @@
 const sendToMessenger = require('./sendToMessenger');
+const GetProfileData = require('./getProfileData');
 
 exports.Text = async function (
     senderId,
@@ -81,6 +82,27 @@ exports.GenericTemplate = async function(
     }
 }
 
+exports.Image = async function(
+    senderId,
+    url
+) {
+    try {
+        await sendToMessenger({
+            recipient: { id: senderId },
+            message: {
+                attachment: {
+                  type: 'image',
+                  payload: {
+                    url: url
+                  }
+                }
+            }
+        })
+    } catch(e) {
+        console.error(e)
+    }
+}
+
 exports.ListTemplate = async function(
     senderId,
     elements,
@@ -126,26 +148,7 @@ exports.RequestLocation = async function(
     } 
 }
 
-exports.Image = async function(
-    senderId,
-    url
-) {
-    try {
-        await sendToMessenger({
-            recipient: { id: senderId },
-            message: {
-                attachment: {
-                  type: 'image',
-                  payload: {
-                    url: url
-                  }
-                }
-            }
-        })
-    } catch(e) {
-        console.error(e)
-    }
-}
+
 
 exports.Typing = async function(
     senderId
@@ -155,6 +158,18 @@ exports.Typing = async function(
             recipient: { id: senderId },
             sender_action: "typing_on"
         })
+    } catch(e) {
+        console.error(e);
+    }
+}
+
+exports.GetProfileData = async function(
+    senderId
+) {
+    try {
+        console.log(senderId)
+        const profile_data = await GetProfileData(senderId)
+        return profile_data
     } catch(e) {
         console.error(e);
     }
