@@ -155,6 +155,12 @@ default is 'large'
 */
 )
 send.Typing(event.senderId)
+send.GetProfileData(event.senderId)
+/*
+Returns a promise. The parameters are:
+first_name, last_name, profile_pic, locale, timezone,
+gender, is_payment_enabled, last_ad_referral
+*/
 send.Random(
 //Will send random between 'text_1' and 'text_2' 
     [
