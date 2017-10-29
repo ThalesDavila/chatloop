@@ -205,8 +205,7 @@ require('chatloop').Development.contextDelete
 [Build your first Chatbot with Chatloop](https://medium.com/@thalesmdav/build-your-first-chatbot-with-chatloop-ddd21e47e21)
 
 # Contributing
-[Guide]
-(https://github.com/ThalesDavila/chatloop/blob/master/CONTRIBUTING.md)
+[Guide] (https://github.com/ThalesDavila/chatloop/blob/master/CONTRIBUTING.md)
 
 # License
 
