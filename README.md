@@ -5,10 +5,11 @@
 
 
 
-### Usage
+## Usage
 ##### How it works:
 
 Every time user sends an input, the loopsRoutes file will be called. Then, based on the user context, will define the correct conversational loop to call.
+
 
 
 ##### Exemple of conversational loop:
@@ -130,7 +131,9 @@ Under Production, you can easily substitute the context
 functions for database functions. 
 
 
+
 ### Functions
+#### Send Functions
 ```js
 send.Text(event.senderId, 'some_text')
 send.Image(event.senderId, 'url')
@@ -173,8 +176,41 @@ send.Random(
     ]
 )
     //the send. funtions became from require('chatloop').Send;
+```
 
 
+#### Messenger Profile API Functions
+The Messenger Profile API can provide the following features:
+* account_linking_url
+* get_started
+* greeting
+* home_url
+* payment_settings
+* persistent_menu
+* target_audience
+* whitelisted_domains
+
+Using the MessengerProfileApi function, you can easily access this API.
+
+Example of how to add a Get Started Button  to your Chatbot using Chatloop:
+
+We want to execute this only one time, so in a new file, just add the following code, changing <GET_STARTED_PAYLOAD>):
+```js
+const chatloop = require('chatloop');
+
+chatloop.MessengerProfileApi({ 
+        "get_started":{
+          "payload":"<GET_STARTED_PAYLOAD>"
+        }
+ })
+```
+Just run this file. If it's working, you will find the "Sending the POST request to the Profile API" message into the console, and your Button will be available quickly.
+
+To add any other feature provided by the API , you need to know the correct parameters, it's into the [Facebook developers site](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api)
+
+
+#### Context Functions
+```js
 context() 
     //will return the current context
 context('someLoop') 
@@ -201,6 +237,7 @@ contextDelete()
 ```
 
 
+
 ### Examples, Tutorials
 [Build your first Chatbot with Chatloop](https://medium.com/@thalesmdav/build-your-first-chatbot-with-chatloop-ddd21e47e21)
 
@@ -211,6 +248,11 @@ Did you solve a bug, rewrite part of the code, or write a new feature?
 Open a GitHub pull request.
 
 If you have never contributed to an open source project, I suggest reading [this article.](https://codeburst.io/a-step-by-step-guide-to-making-your-first-github-contribution-5302260a2940)
+
+### Some issue?
+
+Feel free to open a Github issue. I will really like to help.
+
 
 ### License
 
